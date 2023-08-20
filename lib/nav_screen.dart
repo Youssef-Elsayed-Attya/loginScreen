@@ -1,3 +1,4 @@
+import 'package:firsttest/chats_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,7 +10,7 @@ class navScreen extends StatefulWidget{
 class _navScreenState extends State<navScreen> {
   int sindex=0;
   List<Widget> pages=[
-    Center(child: Text('person screen')),
+    ChatsScreen(),
     Center(child: Text('main screen')),
 
   ];
@@ -17,6 +18,14 @@ class _navScreenState extends State<navScreen> {
   @override
   Widget build(BuildContext context) {
    return Scaffold(
+     appBar: AppBar(
+       leading: IconButton(icon: Icon(Icons.close),
+       onPressed: () => Navigator.pop(context),),
+       backgroundColor: Colors.deepPurple,
+       title: Text(
+         'Home Screen',
+       ),
+     ),
      bottomNavigationBar: BottomNavigationBar(
        currentIndex: sindex,
        onTap: (index){
@@ -25,15 +34,15 @@ class _navScreenState extends State<navScreen> {
          });
 
        },
-       backgroundColor: Colors.tealAccent,
+       backgroundColor: Colors.deepPurple,
        items: [
          BottomNavigationBarItem(
-           icon: Icon(Icons.person),
-           label: 'person'
+           icon: Icon(Icons.chat),
+           label: 'chats'
          ),
          BottomNavigationBarItem(
-           icon: Icon(Icons.mail),
-           label: 'mail'
+           icon: Icon(Icons.settings),
+           label: 'settings'
          )
        ],
      ),

@@ -1,4 +1,6 @@
+import 'package:firsttest/chat.dart';
 import 'package:firsttest/home_screen.dart';
+import 'package:firsttest/nav_screen.dart';
 import 'package:flutter/material.dart';
 
 void main(){
@@ -16,8 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      routes: {
+        'navScreen': (context) =>navScreen(),
 
-      home: HomeScreen(),
+      } ,
+      home: navScreen(),
     ) ;
 
   }

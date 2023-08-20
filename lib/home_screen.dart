@@ -10,6 +10,7 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final Gkey =GlobalKey();
   int counter=0;
   TextEditingController emailController =TextEditingController();
   TextEditingController passController =TextEditingController();
@@ -17,9 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return  SafeArea(
 
-      child: Scaffold(
+      child:  Scaffold(
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin:Alignment.topLeft ,
               end: Alignment.bottomRight,
@@ -37,112 +38,123 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children:[
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 70,
                   backgroundImage:AssetImage('img/person.png'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
 
                 Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Sign IN',style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.purple
-                      ),),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(15),
-                          elevation: 5,
-                          child: TextFormField(
-                            controller:emailController ,
-                            onChanged: (text){
-                              print(text);
-                            },
-                            keyboardType: TextInputType.emailAddress,
+                  child: Form(
+                    key: Gkey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text('Sign IN',style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.purple
+                        ),),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(15),
+                            elevation: 5,
+                            child: TextFormField(
+                              validator: (value) {
+                                if(value!.isEmpty){
+                                  return 'you should enter an email';
+                                }else if(!value.contains('@')){
+                                  return 'enter a valid email';
+                                }else return null;
 
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(
-                                  color: Colors.purple
+                              },
+                              controller:emailController ,
+                              onChanged: (text){
+                                print(text);
+                              },
+                              keyboardType: TextInputType.emailAddress,
+
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide: const BorderSide(
+                                    color: Colors.purple
+                                  )
+                                ),
+                                suffixIcon: const Icon(Icons.person),
+                                hintText: 'enter your email',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)
                                 )
                               ),
-                              suffixIcon: Icon(Icons.person),
-                              hintText: 'enter your email',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20)
-                              )
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(15),
-                          elevation: 5,
-                          child: TextFormField(
-                            controller: passController,
-                            obscureText: true,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(
-                                  color: Colors.purple
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(15),
+                            elevation: 5,
+                            child: TextFormField(
+                              controller: passController,
+                              obscureText: true,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide: const BorderSide(
+                                    color: Colors.purple
+                                  )
+                                ),
+                                suffixIcon: const Icon(Icons.lock),
+                                hintText: 'password',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)
                                 )
                               ),
-                              suffixIcon: Icon(Icons.lock),
-                              hintText: 'password',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20)
-                              )
                             ),
                           ),
                         ),
-                      ),
-                      MaterialButton(onPressed: (){
+                        MaterialButton(onPressed: (){
 
-                        if(emailController.text=='youssef' && passController.text=='12345'){
+                          if(emailController.text=='youssef' && passController.text=='12345'){
 
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>navScreen() ,));
-                          print('yes');
-                        }else{print('no');}
-                      } ,
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)
-                        ),
-                        color: Colors.purple,
-                        height: 45,
-                        minWidth: 100,
-                        padding: EdgeInsets.symmetric(horizontal: 60),
-                        child: Text('Sign in',style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.w600),),
-
-
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Don\'t have an account ?   '),
-                          GestureDetector(
-                            onTap: (){
-                              print('sign UP');
-                            },
-                            child: Text('Sign UP   ',style: TextStyle(
-                              color: Colors.blue
-                            ),),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) =>navScreen() ,));
+                            print('yes');
+                          }else{print('no');}
+                        } ,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)
                           ),
-                        ],
-                      )
-                    ],
+                          color: Colors.purple,
+                          height: 45,
+                          minWidth: 100,
+                          padding: const EdgeInsets.symmetric(horizontal: 60),
+                          child: const Text('Sign in',style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.w600),),
+
+
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Don\'t have an account ?   '),
+                            GestureDetector(
+                              onTap: (){
+                                print('sign UP');
+                              },
+                              child: const Text('Sign UP   ',style: TextStyle(
+                                color: Colors.blue
+                              ),),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.white,
